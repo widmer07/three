@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Example</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Oculta el scroll */
+        }
+        canvas {
+            display: block; /* Asegura que el canvas ocupe todo el espacio */
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script>
+        // Configuración básica de la escena
+        const scene = new THREE.Scene();
+
+        // Configuración de la cámara
+        const camera = new THREE.PerspectiveCamera(
+            75, // Campo de visión (FOV)
+            window.innerWidth / window.innerHeight, // Relación de aspecto
+            0.1, // Plano cercano
+            1000 // Plano lejano
+        );
+
+        // Configuración del renderizador
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement); // Agrega el canvas al DOM
+
+        // Crear un cubo
+        const geometry = new THREE.BoxGeometry(); // Geometría del cubo
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // Material del cubo (verde)
+        const cube = new THREE.Mesh(geometry, material); // Malla que combina geometría y material
+        scene.add(cube); // Agrega el cubo a la escena
+
+        // Posición inicial de la cámara
+        camera.position.z = 5;
+
+        // Función de animación
+        function animate() {
+            requestAnimationFrame(animate); // Llama a la función en el siguiente frame
+
+            // Rotación del cubo
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            // Renderiza la escena desde la perspectiva de la cámara
+            renderer.render(scene, camera);
+        }
+
+        animate(); // Inicia la animación
+    </script>
+</body>
+</html>
